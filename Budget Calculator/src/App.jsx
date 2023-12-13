@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Container from "react-bootstrap/Container";
 import {Button, Stack} from 'react-bootstrap'
+import BudgetCard from "./Components/BudgetCard";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           gap:'1rem', alignItems:'flex-start'}}>
 
         </div>
+        <BudgetCard name="Entertainment" amount={1100} max={1000} gray />
       </Container>
     </>
   );
