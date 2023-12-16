@@ -8,8 +8,8 @@ import AddBudgetModel from "./Components/AddBudgetModel";
 import BudgetContext from './Contexts/BudgetContext'
 function App() {
   const [showAddBudgetModal, setShowAddBudgetModal] = useState(false)
-  // const { budgets } = useBudget();
-  const { budgets } = useContext(BudgetContext);
+  const { budgets, getBudgetExpenses} = useBudget();
+  // const { budgets } = useContext(BudgetContext);
   console.log(budgets);
 
   return (
@@ -29,12 +29,14 @@ function App() {
               alignItems: "flex-start",
             }}
           ></div>
-          {budgets.map(budget => (
-            <BudgetCard 
+          {budgets.map(budget => {
+            const amount = getBudgetExpenses(budget.id).reduce((total, expense)=>
+            total + expense.amount, 0)
+           return( <BudgetCard 
             name={budget.name}
-            amount={budget.amount} 
+            amount={amount} 
             max={budget.max}/>
-          ))}
+          )})}
           
         </Container>
         <AddBudgetModel show={showAddBudgetModal} handleClose={() => setShowAddBudgetModal(false)}/>
