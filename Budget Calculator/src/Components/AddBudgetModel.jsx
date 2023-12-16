@@ -1,12 +1,12 @@
 import { useRef } from "react"
 import { Button, Form, FormControl, Modal, ModalBody, ModalHeader, ModalTitle } from "react-bootstrap"
-import { useBudget } from "../Contexts/BudgetContext"
+import { useBudgets } from "../Contexts/BudgetContext"
 
 
 function AddBudgetModel({show, handleClose}) {
     const nameRef = useRef()
     const maxRef = useRef()
-    const { addBudget} = useBudget()
+    const { addBudget} = useBudgets()
     function handleSubmit(e){
         e.preventDefault()
         addBudget({

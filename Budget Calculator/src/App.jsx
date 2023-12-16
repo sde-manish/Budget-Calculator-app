@@ -3,18 +3,17 @@ import "./App.css";
 import Container from "react-bootstrap/Container";
 import { Button, Stack } from "react-bootstrap";
 import BudgetCard from "./Components/BudgetCard";
-import BudgetProvider, { useBudget } from "./Contexts/BudgetContext";
+import BudgetsProvider, { useBudgets } from "./Contexts/BudgetContext";
 import AddBudgetModel from "./Components/AddBudgetModel";
-import BudgetContext from './Contexts/BudgetContext'
+// import BudgetContext from './Contexts/BudgetContext'
 function App() {
   const [showAddBudgetModal, setShowAddBudgetModal] = useState(false)
-  const { budgets, getBudgetExpenses} = useBudget();
+  const { budgets, getBudgetExpenses} = useBudgets();
   // const { budgets } = useContext(BudgetContext);
   console.log(budgets);
 
   return (
     <>
-      <BudgetProvider>
         <Container className="my-4">
           <Stack direction="horizontal" gap={2} className="mb-4">
             <h1 className="me-auto">Budget</h1>
@@ -33,6 +32,7 @@ function App() {
             const amount = getBudgetExpenses(budget.id).reduce((total, expense)=>
             total + expense.amount, 0)
            return( <BudgetCard 
+            key={budget.id}
             name={budget.name}
             amount={amount} 
             max={budget.max}/>
@@ -40,7 +40,6 @@ function App() {
           
         </Container>
         <AddBudgetModel show={showAddBudgetModal} handleClose={() => setShowAddBudgetModal(false)}/>
-      </BudgetProvider>
     </>
   );
 }
