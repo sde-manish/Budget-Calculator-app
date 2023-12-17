@@ -3,12 +3,17 @@ import "./App.css";
 import Container from "react-bootstrap/Container";
 import { Button, Stack } from "react-bootstrap";
 import BudgetCard from "./Components/BudgetCard";
-import BudgetsProvider, { useBudgets } from "./Contexts/BudgetContext";
+import BudgetsProvider, { UNCATEGORIZED_BUDGET_ID, useBudgets } from "./Contexts/BudgetContext";
 import AddBudgetModel from "./Components/AddBudgetModel";
 import AddExpenseModal from "./Components/AddExpenseModal";
+import ViewExpensesModal from "./Components/ViewExpensesModal";
+import UncategorizedBudgetCard from "./Components/UncategorizedBudgetCard";
+import TotalBudgetCard from "./Components/TotalBudgetCard";
+
 function App() {
   const [showAddBudgetModal, setShowAddBudgetModal] = useState(false)
   const [showAddExpenseModal, setShowAddExpenseModal] = useState(false)
+  const [ViewExpensesModalBudgetId, setViewExpensesModalBudgetId ] = useState()
   const [addExpenseModalBudgetId, setAddExpenseModalBudgetId] = useState()
   const { budgets, getBudgetExpenses} = useBudgets();
 
@@ -41,14 +46,23 @@ function App() {
             name={budget.name}
             amount={amount} 
             max={budget.max}
-            onAddExpenseClick={()=>openAddExpenseModal(budget.id)}/>
+            onAddExpenseClick={()=>openAddExpenseModal(budget.id)}
+            onViewExpensesClick={()=>setViewExpensesModalBudgetId(budget.id)}
+            />
           )})}
           
+        <UncategorizedBudgetCard onAddExpenseClick={()=>openAddExpenseModal()}
+        onViewExpensesClick={()=>setViewExpensesModalBudgetId(UNCATEGORIZED_BUDGET_ID)} />
+        <TotalBudgetCard />
         </Container>
         <AddBudgetModel show={showAddBudgetModal} handleClose={() => setShowAddBudgetModal(false)}/>
         <AddExpenseModal show={showAddExpenseModal} defaultBudgetId={addExpenseModalBudgetId}
         handleClose={() => setShowAddExpenseModal(false)}
         />
+        <ViewExpensesModal budgetId ={ViewExpensesModalBudgetId}
+        handleClose={() => setViewExpensesModalBudgetId()}
+        />
+        
     </>
   );
 }
